@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.seriea.model.Model;
+import it.polito.tdp.seriea.model.Team;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,7 +22,7 @@ public class FXMLController {
     private URL location;
 
     @FXML
-    private ChoiceBox<?> boxSquadra;
+    private ChoiceBox<Team> boxSquadra;
 
     @FXML
     private Button btnSelezionaSquadra;
@@ -37,12 +38,23 @@ public class FXMLController {
 
     @FXML
     void doSelezionaSquadra(ActionEvent event) {
-
+    	
+    	this.txtResult.clear();
+    	Team squadra = this.boxSquadra.getValue();
+    	if(squadra==null) {
+    		this.txtResult.appendText("Selezionare una squadra!!\n");
+    		return;
+    	}
+    	this.txtResult.appendText(this.model.selezionaSquadra(squadra));
+    	this.btnTrovaAnnataOro.setDisable(false);
     }
 
     @FXML
     void doTrovaAnnataOro(ActionEvent event) {
-
+    	
+    	this.txtResult.appendText(this.model.creaGrafo());
+    	
+    	
     }
 
     @FXML
@@ -62,5 +74,7 @@ public class FXMLController {
 
 	public void setModel(Model model) {
 		this.model = model;
+		this.boxSquadra.getItems().addAll(this.model.getTeams());
+		this.btnTrovaAnnataOro.setDisable(true);
 	}
 }

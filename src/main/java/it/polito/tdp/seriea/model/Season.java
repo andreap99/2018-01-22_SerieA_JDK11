@@ -82,4 +82,9 @@ public class Season {
 		return description;
 	}
 
+	public int compareTo(Season stagione) {
+		
+		return this.season-stagione.season;
+	}
+
 }
